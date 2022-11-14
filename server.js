@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-const appName = 'capoeira-app';
+const appName = 'frontend';
 const directory = __dirname + `/dist/${appName}`;
 
 app.use(express.static(directory))
