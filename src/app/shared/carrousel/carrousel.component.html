@@ -1,0 +1,23 @@
+<app-titulo-container [titulo]="titulo"></app-titulo-container>
+<div class="container carousel mt-4">
+  <swiper [pagination]="{ dynamicBullets: true }" [navigation]="true" class="mySwiper2 mySwiperDimension" *ngIf="itens.length > 0">
+    <ng-template swiperSlide class="swiper-slide-2 {{addClassFlexRowReverse()}}" *ngFor="let item of itens">
+      <div class="img-mestre">
+        <img [src]="mostraImagem(item.imagemUrl)" alt="">
+      </div>
+      <div class="info">
+        <h3>{{item.nome}}</h3>
+        <p>{{item.descricao}}</p>
+        <div class="instagram" *ngIf="item.instagram">
+          <a href="https://instagram.com/{{item.instagram}}" target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+            <span> @{{item.instagram}}</span>
+          </a>
+        </div>
+      </div>
+    </ng-template>
+  </swiper>
+  <div *ngIf="itens.length == 0">
+    <h5 class="text-center text-warning">Nenhum conteúdo encontrado.</h5>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<app-titulo [titulo]="'Perfil'" [iconClass]="'fa-solid fa-address-card'"></app-titulo>
+
+<div class="card rounded shadow-sm container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row p-3">
+      <div class="col-lg-3 pt-1">
+        <div class="card mb-3">
+          <div class="card-header"></div>
+          <div class="d-flex align-self-center pt-3">
+            <a>
+              <img
+                src="/assets/logo.png"
+                name="aboutme" width="120" height="120" class="rounded-circle">
+            </a>
+          </div>
+          <div class="card-body">
+            <div class="h4 text-center mb-3">{{ controls.nome.value }}</div>
+          </div>
+          <div class="card-footer"></div>
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <div class="form-row">
+          <div class="form-group col-12">
+            <h3 class="border-bottom">Detalhe Perfil</h3>
+          </div>
+
+          <div class="form-group col-sm-5">
+            <label>Nome</label>
+            <input type="text" class="form-control" placeholder="Insira seu nome"
+              [ngClass]="{ 'is-invalid': controls.nome.errors && controls.nome.touched }" formControlName="nome" />
+            <div *ngIf="controls.nome.errors?.required" class="invalid-feedback">Nome é obrigatório.</div>
+            <div *ngIf="controls.nome.errors?.minlength" class="invalid-feedback">Nome precisa conter no mínimo 2
+              caracteres.</div>
+            <div *ngIf="controls.nome.errors?.maxlength" class="invalid-feedback">Nome precisa conter no máximo 60
+              caracteres.</div>
+          </div>
+
+          <div class="form-group col-sm-5">
+            <label>Email</label>
+            <input type="text" class="form-control" placeholder="Insira seu email"
+              [ngClass]="{ 'is-invalid': controls.email.errors && controls.email.touched }" formControlName="email" />
+            <div *ngIf="controls.email.errors?.required" class="invalid-feedback">Nome é obrigatório.</div>
+            <div *ngIf="controls.email.errors?.minlength" class="invalid-feedback">Nome precisa conter no mínimo 2
+              caracteres.</div>
+            <div *ngIf="controls.email.errors?.maxlength" class="invalid-feedback">Nome precisa conter no máximo 60
+              caracteres.</div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="pt-3 border-bottom">Mudar Senha</h3>
+          <p>Caso mude de senha, preencha os campos abaixo:</p>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-sm">
+            <input class="form-control" type="password" placeholder="Digite uma senha"
+              [ngClass]="{'is-invalid': controls.senha.errors && controls.senha.touched}" formControlName="senha" />
+            <div *ngIf="controls.senha.errors?.required" class="invalid-feedback">Insira uma senha.</div>
+            <div *ngIf="controls.senha.errors?.minlength" class="invalid-feedback">Sua senha precisa conter no mínimo 3 caracteres.</div>
+          </div>
+          <div class="form-group col-sm">
+            <input class="form-control" type="password" placeholder="Confirme a senha"
+              [ngClass]="{'is-invalid': controls.confirmarSenha.errors && controls.confirmarSenha.touched}"
+              formControlName="confirmarSenha" />
+            <div *ngIf="controls.confirmarSenha.errors?.required" class="invalid-feedback">Confirme a senha.</div>
+            <div *ngIf="controls.confirmarSenha.errors?.mustMatch" class="invalid-feedback">Senha diferente.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="d-flex">
+        <button class="btn btn-outline-secondary mr-auto border">
+          Cancelar
+        </button>
+        <button class="btn btn-success" type="submit" [disabled]="!form.valid">
+          Salvar
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

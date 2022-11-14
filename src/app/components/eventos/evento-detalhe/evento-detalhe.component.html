@@ -1,0 +1,137 @@
+<div class="container">
+  <div class="row">
+    <div [ngClass]="{'col-md-8 pb-3': modoEditar, 'col-md-12': !modoEditar}">
+      <div class="card rounded shadow-sm">
+        <form [formGroup]="form">
+          <div class="p-3">
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <div class="d-flex justify-content-end" *ngIf="modoEditar">
+                  <a class="d-flex btn btn-outline-primary" routerLink="/eventos/detalhe">
+                    <i class="fa fa-plus-circle my-1"></i>
+                    <span class="ml-1 d-none d-sm-block">Novo</span>
+                  </a>
+                </div>
+                <label>Nome</label>
+                <input type="text" class="form-control" [ngClass]="cssValidator(controls.titulo)" formControlName="titulo"
+                  placeholder="Insira o nome" [(ngModel)]="evento.titulo">
+                <div *ngIf="controls.titulo.errors?.required" class="invalid-feedback">Nome é obrigatório.</div>
+                <div *ngIf="controls.titulo.errors?.minlength" class="invalid-feedback">Nome deve conter no mínimo 4
+                  caracteres.
+                </div>
+                <div *ngIf="controls.titulo.errors?.maxlength" class="invalid-feedback">Nome deve conter no máximo 50
+                  caracteres.</div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-8">
+                <label>Local</label>
+                <input type="text" class="form-control" [ngClass]="cssValidator(controls.local)" formControlName="local"
+                  placeholder="Insira o local" [(ngModel)]="evento.local">
+                <div *ngIf="controls.local.errors?.required" class="invalid-feedback">Local é obrigatório.</div>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Data e Hora</label>
+                <input type="datetime" class="form-control" [ngClass]="cssValidator(controls.dataEvento)"
+                  formControlName="dataEvento" placeholder="Insira a data e hora" [(ngModel)]="evento.dataEvento" bsDatepicker [bsConfig]="bsConfig">
+                <div *ngIf="controls.dataEvento.errors?.required" class="invalid-feedback">Data e Hora é obrigatório!
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label>Telefone</label>
+                <input type="text" class="form-control is-invalid" [ngClass]="cssValidator(controls.telefone)"
+                  formControlName="telefone" placeholder="(00) 90000-0000 / (00) 0000-0000" [(ngModel)]="evento.telefone">
+                <div *ngIf="controls.telefone.errors?.required" class="invalid-feedback">Telefone é obrigatório!</div>
+                <div *ngIf="controls.telefone.errors?.minlength" class="invalid-feedback">Insira um número de
+                  telefone/celular
+                  válido!</div>
+                <div *ngIf="controls.telefone.errors?.maxlength" class="invalid-feedback">Insira um número de
+                  telefone/celular
+                  válido!</div>
+              </div>
+              <div class="form-group col-md-6">
+                <label>E-mail</label>
+                <input type="text" class="form-control" [ngClass]="cssValidator(controls.email)" formControlName="email"
+                  placeholder="e-mail" [(ngModel)]="evento.email">
+                <div *ngIf="controls.email.errors?.required" class="invalid-feedback">E-mail é obrigatório!</div>
+                <div *ngIf="controls.email.errors?.email" class="invalid-feedback">Insira um e-mail válido!</div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label>Descricao</label>
+                  <textarea class="form-control"
+                    [ngClass]="cssValidator(controls.descricao)"
+                    formControlName="descricao"
+                    placeholder="Insira a descrição"
+                    [(ngModel)]="evento.descricao"
+                    cols="30"
+                    rows="5"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="d-flex">
+              <button class="btn btn-outline-secondary mr-auto border" (click)="resetForm()">
+                Limpar campos
+              </button>
+              <button class="btn btn-success" [disabled]="!form.valid" (click)="salvarEvento()">
+                <!-- <span class="spinner-border spinner-border-sm mr-1"></span> -->
+                Salvar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-md-4" *ngIf="modoEditar">
+      <div [formGroup]="form" class="card-evento-view shadow-sm">
+        <div class="form-row">
+          <div class="form-group m-0">
+            <input type="file" #file (change)="onFileChange($event)" class="form-control is-invalid" placeholder="" style="display: none">
+          </div>
+        </div>
+        <div class="card profile-card-2">
+          <div class="card-img-block">
+            <img class="image" [src]="imagemURL" class="img-fluid" (click)="file.click()" alt="Card image cap"
+              tooltip="Uplaod de Nova Imagem" [adaptivePosition]="false" placement="bottom" />
+          </div>
+          <div class="card-body pt-3">
+            <h4>{{evento.titulo}}</h4>
+            <p class="card-text">
+              <b>Local:</b> {{evento.local}}
+              <br>
+              <b>Data:</b> {{evento.dataEvento | DateFormatPipe}}
+            </p>
+            <hr>
+            <p class="card-text">
+              <b>Contatos</b><br>
+              <small class="text-muted">Telefone: {{evento.telefone}}</small>
+              <br>
+              <small class="text-muted">E-mail: {{evento.email}}</small>
+            </p>
+            <div class="row">
+              <div class="icon-block col-md-8 iconesSociais">
+                <a href="">
+                  <i class=""></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+<!-- <ng-template #template>
+  <div class="modal-body text-center">
+    <p>Deseja realmente excluir o lote {{this.loteAtual.nome}}?</p>
+    <button type="button" class="btn btn-default" (click)="confirmDeleteLote()">Sim</button>
+    <button type="button" class="btn btn-primary" (click)="declineDeleteLote()">Não</button>
+  </div>
+</ng-template> -->

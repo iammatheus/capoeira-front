@@ -1,0 +1,96 @@
+<div class="container">
+  <div class="row">
+    <div [ngClass]="{'col-md-8 pb-3': modoEditar, 'col-md-12': !modoEditar}">
+      <div class="card rounded shadow-sm">
+        <form [formGroup]="form">
+          <div class="p-3">
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <div class="d-flex justify-content-end" *ngIf="modoEditar">
+                  <a class="d-flex btn btn-outline-primary" routerLink="/mestres/detalhe">
+                    <i class="fa fa-plus-circle my-1"></i>
+                    <span class="ml-1 d-none d-sm-block">Novo</span>
+                  </a>
+                </div>
+                <div class="col-sm-4 mb-3 p-0">
+                  <label>Tipo</label>
+                  <select class="form-select" formControlName="tipo">
+                    <option value="DN">Diretoria de Núcleos</option>
+                    <option value="DE">Diretoria Executiva</option>
+                  </select>
+                </div>
+
+                <label>Nome</label>
+                <input type="text" class="form-control" [ngClass]="cssValidator(controls.nome)" formControlName="nome"
+                  placeholder="Insira o nome" [(ngModel)]="mestre.nome">
+                <div *ngIf="controls.nome.errors?.required" class="invalid-feedback">Nome é obrigatório.</div>
+                <div *ngIf="controls.nome.errors?.minlength" class="invalid-feedback">Nome deve conter no mínimo 3
+                  caracteres.
+                </div>
+                <div *ngIf="controls.nome.errors?.maxlength" class="invalid-feedback">Nome deve conter no máximo 50
+                  caracteres.</div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+              <label>Instagram</label>
+                <input type="text" class="form-control" [ngClass]="cssValidator(controls.instagram)" formControlName="instagram"
+                  placeholder="Insira o instagram" [(ngModel)]="mestre.instagram">
+                <div *ngIf="controls.nome.errors?.maxlength" class="invalid-feedback">Nome deve conter no máximo 15
+                  caracteres.</div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label>Descrição</label>
+                <textarea  formControlName="descricao" placeholder="Insira o descricao" [(ngModel)]="mestre.descricao" class="form-control" rows="7" [ngClass]="cssValidator(controls.descricao)"></textarea>
+                <div *ngIf="controls.descricao.errors?.maxlength" class="invalid-feedback">Descrição deve conter no
+                  máximo 500 caracteres.</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="d-flex">
+              <button class="btn btn-outline-secondary mr-auto border" (click)="resetForm()">
+                Limpar campos
+              </button>
+              <button class="btn btn-success" [disabled]="!form.valid" (click)="salvarMestre()">
+                Salvar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-4" *ngIf="modoEditar">
+      <div [formGroup]="form" class="card-evento-view shadow-sm">
+        <div class="form-row">
+          <div class="form-group m-0">
+            <input type="file" #file (change)="onFileChange($event)" class="form-control is-invalid" placeholder=""
+              style="display: none">
+          </div>
+        </div>
+        <div class="card profile-card-2">
+          <div class="card-img-block">
+            <img class="image" [src]="imagemURL" class="img-fluid" (click)="file.click()" alt="Card image cap"
+              tooltip="Nova imagem" [adaptivePosition]="false" placement="bottom" />
+          </div>
+          <div class="card-body pt-3">
+            <h4>{{mestre.nome}}</h4>
+            <p class="card-text">
+              <b>Descrição:</b> {{mestre.descricao}}
+            </p>
+            <hr>
+            <div class="instagram" *ngIf="mestre.instagram">
+              <a href="https://instagram.com/{{mestre.instagram}}" target="_blank">
+                <i class="fa-brands fa-instagram"></i>
+                <span> @{{mestre.instagram}}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>

@@ -1,0 +1,152 @@
+<div class="video">
+  <div class="overlay">
+    <img src="/assets/logo.png" alt="">
+    <h1 class="text-center">Bem-vindo ao FECARJ!</h1>
+  </div>
+  <!-- <video autoplay loop>
+    <source src="./assets/file.mp4" type="video/mp4">
+    Seu navegador não suporta esse tipo de vídeo.
+  </video> -->
+</div>
+
+<div class="container carousel mt-4" *ngIf="eventos">
+  <app-titulo-container [titulo]="'Eventos & Atividades'"></app-titulo-container>
+  <swiper
+    style="--swiper-navigation-color: #edcd03;--swiper-pagination-color: #edcd03"
+    [spaceBetween]="10"
+    [navigation]="true"
+    [thumbs]="{ swiper: thumbsSwiper }"
+    class="mySwiper2">
+    <ng-template swiperSlide *ngFor="let item of eventos">
+        <img src="{{mostraImagem(item.imagemUrl)}}" />
+    </ng-template>
+  </swiper>
+  <swiper
+    (swiper)="thumbsSwiper = $event"
+    [spaceBetween]="10"
+    [slidesPerView]="4"
+    [freeMode]="true"
+    [watchSlidesProgress]="true"
+    class="mySwiper">
+    <ng-template swiperSlide *ngFor="let item of eventos">
+      <div>
+        <img src="{{mostraImagem(item.imagemUrl)}}" />
+      </div>
+    </ng-template>
+  </swiper>
+</div>
+
+<div class="img-back mt-5 mb-5">
+  <div class="divisao w-50">
+    <div class="quem-somos">
+      <div class="w-50 div-none"></div>
+      <div class="descricao container">
+        <app-titulo-container [titulo]="'Quem somos'"></app-titulo-container>
+        <p>
+          Fundada em 2014 e com a gestão atual, presidida por Mestre Garnisé, a FECARJ
+          vem com um olhar de reorganização e resgate histórico cultural da Capoeira do Rio de Janeiro. Buscando a
+          qualificação e profissionalização de capoeiristas para uma atuação sustentável dentro da Capoeira.
+          <br>
+          <br>
+
+          <b>MISSÃO</b>
+          <br>
+
+          Promover, com excelência e em parceria com os seus filiados e apoiadores, a Capoeira no Rio de Janeiro,
+          contribuindo para a formação e desenvolvimento de capoeiristas.
+
+          <br>
+          <br>
+          <b>VISÃO</b>
+          <br>
+
+
+          Ser uma instituição inovadora e destacada na promoção da capoeira, com uma gestão participativa, transparente
+          e sustentável junto a seus filiados.
+          <br><br>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-carrousel
+  [itens]="mestresDE"
+  [titulo]="'Diretoria Executiva'"
+></app-carrousel>
+
+<div class="container mt-5 mb-5">
+  <app-titulo-container [titulo]="'Nossos parceiros'"></app-titulo-container>
+  <div class="d-flex justify-content-start filial flex-wrap">
+    <div *ngFor="let filiado of filiados">
+      <img src="{{mostraImagem(filiado.imagemUrl)}}" />
+    </div>
+  </div>
+</div>
+
+<app-carrousel
+  [itens]="mestresDN"
+  [titulo]="'Diretoria de Núcleos'"
+  [id]="2"
+></app-carrousel>
+
+<div class="container mt-5">
+  <app-titulo-container [titulo]="'Contatos'"></app-titulo-container>
+  <h5 class="text-center">Para qualquer informação, dúvida ou comentário, <br>por favor, ligue ou nos mande uma
+    mensagem!</h5>
+  <div class="contatos d-flex justify-content-around mt-4">
+    <div class="contato1">
+      <h6>
+        <b>Mestre Garnisé</b>
+      </h6>
+      <h6>
+        <i class="fa-brands fa-whatsapp"></i>
+        (21) 9699-87657
+      </h6>
+    </div>
+    <div class="contato2">
+      <h6>
+        <b>Mestre PC</b>
+      </h6>
+      <h6>
+        <i class="fa-brands fa-whatsapp"></i>
+        (21) 98913-4550
+      </h6>
+    </div>
+    <div class="contato3">
+      <h6>
+        <b>E-mail</b>
+      </h6>
+      <h6>
+        <i class="fa-regular fa-envelope"></i>
+        federacaoecapoeiraerj@hotmail.com
+      </h6>
+    </div>
+  </div>
+</div>
+
+<footer class="mt-5">
+  <div class="container footer">
+    <img src="/assets/logo.png" alt="">
+
+    <div class="logo-footer">
+      <div class="social-media">
+        <div class="facebook sociais">
+          <a href="https://www.facebook.com/federacaofecarj" target="_blank">
+            <i class="fa-brands fa-facebook"></i>
+          </a>
+          <span>Siga-nos no Facebook!</span>
+        </div>
+        <div class="instagram sociais ">
+          <a href="https://www.instagram.com/fecarj_capoeira/" target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <span>Siga-nos no Instagram!</span>
+        </div>
+      </div><br>
+      <span class="desenvolvedor">Desenvolvido por:
+        <a href="https://www.linkedin.com/in/matheusfsiqueira/" target="_blank">Matheus Ferreira</a>
+      </span>
+    </div>
+  </div>
+</footer>

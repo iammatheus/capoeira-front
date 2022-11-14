@@ -1,0 +1,246 @@
+//Bem-vindo - video
+.video {
+  position: relative;
+}
+video {
+  width: 100%;
+  height: 100%;
+}
+.overlay{
+  position: absolute;
+  background-color: rgba(0,0,0,0.5);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  h1{
+    color: white;
+    font-size: 4rem;
+  }
+}
+
+.fa-whatsapp{
+  color: #28D146;
+}
+
+//quem-somos
+.img-back{
+  background: url('../../../assets/background-quem-somos.webp') no-repeat center center fixed;
+  background-size: auto 100%;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+  .quem-somos{
+    display: flex;
+    .descricao{
+      padding: 0 20px 0 0;
+      p{
+        font-size: 17px;
+        b{
+          color: rgb(237,205,31);
+          font-size: 25px;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}
+.divisao{
+  background-color: #f8f9fa;
+}
+
+//footer
+footer{
+  background-color: #edcd03;
+  padding: 15px 0;
+  .facebook{
+    margin-bottom: 5px;
+  }
+  .sociais{
+    display: flex;
+    align-items: center;
+    a{
+      margin-right: 4px;
+    }
+    i{
+      font-size: 20px;
+    }
+    :hover {
+      i {
+        transition: .3s;
+        transform: scale(1.1);
+      }
+    }
+  }
+  a {
+    text-decoration: none;
+    color: black;
+    margin-right: 10px;
+    i {
+      font-size: 30px;
+    }
+  }
+}
+.footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .desenvolvedor{
+    :hover{
+      text-decoration: underline;
+    }
+  }
+  img{
+    width: 110px;
+  }
+}
+
+// carrossel
+@import "~swiper/css";
+@import "~swiper/css/free-mode";
+@import "~swiper/css/navigation";
+@import "~swiper/css/thumbs";
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body {
+  background: #000;
+  color: #000;
+}
+
+.swiper {
+  width: 100%;
+  height: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.swiper-slide {
+  height: 650px;
+  background-size: cover;
+  background-position: center;
+}
+
+.mySwiper2 {
+  height: 650px;
+  width: 60%;
+}
+
+.mySwiper {
+  height: 120px;
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+
+.mySwiper .swiper-slide {
+  width: 25%;
+  opacity: 0.4;
+}
+
+.mySwiper .swiper-slide-thumb-active {
+  opacity: 1;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.filial{
+  > div {
+    margin: 10px;
+    > img {
+      width: 165px;
+      height: 165px;
+    }
+  }
+}
+
+.teste {
+  filter: drop-shadow(0px 0px 0px #000);
+}
+
+@media screen and (max-width: 992px) {
+  .mySwiper2 {
+    width: 100%;
+  }
+  .filial {
+    justify-content: center !important;
+  }
+  .overlay {
+    flex-direction: column;
+    h1 {
+      font-size: 3rem;
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .mySwiper2 {
+    height: 400px;
+  }
+  .div-none{
+    display: none;
+  }
+  .divisao {
+    width: 100% !important;
+    background: rgba(255, 255, 255, 0.8);
+  }
+  .descricao{
+    width: 100%;
+    padding: 0 !important;
+    p {
+      padding: 0 20px;
+    }
+  }
+  .contatos{
+      display: block !important;
+    div {
+      margin-bottom: 20px;
+    }
+  }
+}
+@media screen and (max-width: 550px) {
+  .mySwiper{
+    display: none;
+  }
+  .overlay {
+    flex-direction: column;
+    h1 {
+      display: none;
+    }
+  }
+}
+@media screen and (max-width: 430px) {
+  .mySwiper2 {
+    height: auto;
+  }
+}
