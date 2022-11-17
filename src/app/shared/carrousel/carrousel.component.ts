@@ -22,9 +22,7 @@ export class CarrouselComponent implements OnInit {
   ngOnInit() { }
 
   public mostraImagem(imagemURL: string): string {
-    return (imagemURL !== '')
-    ? `${environment.apiURL}resources/images/${imagemURL}`
-    : 'assets/img/sem-imagem.png';
+    return 'assets/img/sem-imagem.png';
   }
 
   addClassFlexRowReverse(){
