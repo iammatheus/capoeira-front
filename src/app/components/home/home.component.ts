@@ -48,9 +48,7 @@ export class HomeComponent implements OnInit {
   }
 
   public mostraImagem(imagemURL: string): string {
-    return (imagemURL !== '' && imagemURL !== null)
-    ? ``
-    : 'assets/img/sem-imagem.png';
+    return 'assets/img/sem-imagem.png';
   }
 
   public carregaEventos(): void {

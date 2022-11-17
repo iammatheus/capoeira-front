@@ -62,10 +62,10 @@ export class EventoDetalheComponent implements OnInit {
       this.eventoService.getEventoById(this.eventoId)
         .subscribe(
           (evento: Evento) => {
-            this.evento = { ...evento['evento'] };
-            this.form.patchValue(this.evento['evento']);
+            this.evento = { ...evento };
+            this.form.patchValue(this.evento);
             if(this.evento.imagemUrl !== ''){
-              this.imagemURL = `${environment.apiURL}resources/images/${this.evento.imagemUrl}`;
+              this.imagemURL = '../../../../assets/img/sem-imagem.png';
             }
           },
           (error: any) => {
@@ -106,7 +106,6 @@ export class EventoDetalheComponent implements OnInit {
     if (this.form.valid) {
       this.spinner.show();
       this.evento = (this.estadoSalvar === 'post') ? { ...this.form.value } : { _id: this.evento._id, ...this.form.value };
-
       this.eventoService[this.estadoSalvar](this.evento).subscribe(
         ({ _id }: Evento) => {
           this.toastr.success('Evento salvo com sucesso!', 'Sucesso!');

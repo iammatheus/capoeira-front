@@ -69,11 +69,11 @@ export class FiliadoDetalheComponent implements OnInit {
       this.filiadoService.getFiliadoById(this.filiadoId)
         .subscribe(
           (filiado: Filiado) => {
-            this.filiado = { ...filiado['filiado'] };
+            this.filiado = { ...filiado };
             this.form.patchValue(this.filiado);
 
             if (this.filiado.imagemUrl !== '') {
-              this.imagemURL = `${environment.apiURL}resources/images/${this.filiado.imagemUrl}`;
+              this.imagemURL = '../../../../assets/img/sem-imagem.png';
             }
           },
           (error: any) => {

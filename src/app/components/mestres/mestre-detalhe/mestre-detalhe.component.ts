@@ -64,11 +64,11 @@ export class MestreDetalheComponent implements OnInit {
       this.mestreService.getMestreById(this.mestreId)
         .subscribe(
           (mestre: Mestre) => {
-            this.mestre = { ...mestre['diretoria'] };
+            this.mestre = { ...mestre };
             this.form.patchValue(this.mestre);
 
             if (this.mestre.imagemUrl !== '') {
-              this.imagemURL = `${environment.apiURL}resources/images/${this.mestre.imagemUrl}`;
+              this.imagemURL = '../../../../assets/img/sem-imagem.png';
             }
           },
           (error: any) => {
