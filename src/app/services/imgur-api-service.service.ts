@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class ImgurApiService {
   private readonly IMGUR_UPLOAD_URL = 'https://api.imgur.com/3/image/';
-  private readonly clientId = 'c1fea4c597fa3c9';
+  private readonly clientId = '11f02058157194d';
 
   constructor(
     private http: HttpClient
