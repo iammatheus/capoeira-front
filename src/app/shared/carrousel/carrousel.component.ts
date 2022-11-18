@@ -1,4 +1,4 @@
-import { environment } from './../../../environments/environment.prod';
+import { ImgurApiService } from './../../services/imgur-api-service.service';
 import { Component, ViewEncapsulation, Input, OnInit } from '@angular/core';
 
 import SwiperCore, { FreeMode, Navigation, Thumbs } from "swiper";
@@ -17,7 +17,7 @@ export class CarrouselComponent implements OnInit {
   @Input() id?: number;
   thumbsSwiper: any;
 
-  constructor() { }
+  constructor(private ImgurApiService: ImgurApiService) { }
 
   ngOnInit() { }
 
