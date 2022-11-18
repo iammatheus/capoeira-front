@@ -70,6 +70,10 @@
   </div>
 </div>
 
+<input type="file" (change)="onChange($event)" class="form-control is-invalid" placeholder="">
+<label>Imagem: </label>
+<img src="{{this.imagemImgur}}" />
+
 <app-carrousel
   [itens]="mestresDE"
   [titulo]="'Diretoria Executiva'"

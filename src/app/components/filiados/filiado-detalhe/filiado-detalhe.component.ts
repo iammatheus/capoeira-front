@@ -21,7 +21,6 @@ export class FiliadoDetalheComponent implements OnInit {
   estadoSalvar = 'post';
   filiadoId: string;
   imagemURL = 'assets/img/upload.png';
-  file: File;
   public imagemImgur = '';
 
   get modoEditar(): boolean {
@@ -56,6 +55,7 @@ export class FiliadoDetalheComponent implements OnInit {
   }
 
   onChange(file: any) {
+    console.log('file', file)
     this.imgurService.upload(file.target.files[0])
       .subscribe(res => {
         this.imagemImgur = res['data'].link;

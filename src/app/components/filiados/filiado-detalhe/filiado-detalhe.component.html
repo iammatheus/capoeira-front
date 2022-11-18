@@ -34,12 +34,10 @@
     <div class="col-md-4" *ngIf="modoEditar">
       <div [formGroup]="form" class="card-evento-view shadow-sm">
         <input type="file" (change)="onChange($event)" class="form-control is-invalid" placeholder="">
-
+        <label>Imagem: </label>
+        <img src="{{this.imagemImgur}}" />
         <div class="card profile-card-2">
-          <div class="card-img-block">
-            <img class="image" [src]="imagemImgur" class="img-fluid" alt="Card image cap"
-              tooltip="Nova imagem" [adaptivePosition]="false" placement="bottom" />
-          </div>
+
           <div class="card-body pt-3">
             <h4>{{filiado.nome}}</h4>
           </div>
