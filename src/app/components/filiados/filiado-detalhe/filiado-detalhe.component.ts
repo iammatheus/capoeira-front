@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FiliadoService } from '../../../services/filiado.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ImgurApiService } from '../../../services/imgur-api-service.service';
+import { ImgurApiService } from './../../../services/imgur-api-service.service';
 @Component({
   selector: 'app-filiado-detalhe',
   templateUrl: './filiado-detalhe.component.html',
