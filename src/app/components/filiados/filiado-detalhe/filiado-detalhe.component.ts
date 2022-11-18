@@ -22,6 +22,7 @@ export class FiliadoDetalheComponent implements OnInit {
   filiadoId: string;
   imagemURL = 'assets/img/upload.png';
   file: File;
+  public imagemImgur = '';
 
   get modoEditar(): boolean {
     return this.estadoSalvar === 'put';
@@ -56,7 +57,10 @@ export class FiliadoDetalheComponent implements OnInit {
 
   onChange(file: any) {
     this.imgurService.upload(file.target.files[0])
-      .subscribe(res => console.log(res));
+      .subscribe(res => {
+        this.imagemImgur = res['data'].link;
+        console.log({'res: ': res, 'ImagemUrl': this.imagemImgur, 'res.data': res['data']})
+      });
   }
 
   public carregarFiliado(): void {
@@ -71,10 +75,6 @@ export class FiliadoDetalheComponent implements OnInit {
           (filiado: Filiado) => {
             this.filiado = { ...filiado };
             this.form.patchValue(this.filiado);
-
-            if (this.filiado.imagemUrl !== '') {
-              this.imagemURL = '../../../../assets/img/sem-imagem.png';
-            }
           },
           (error: any) => {
             this.toastr.error('Erro ao carregar filiado.', 'Erro!')
@@ -122,30 +122,4 @@ export class FiliadoDetalheComponent implements OnInit {
       );
     }
   }
-
-  onFileChange(ev: any): void {
-    const reader = new FileReader();
-
-    reader.onload = (event: any) => this.imagemURL = event.target.result;
-
-    this.file = ev.target.files;
-    reader.readAsDataURL(this.file[0]);
-
-    this.uploadImagem();
-  }
-
-  uploadImagem(): void {
-    this.spinner.show();
-    this.filiadoService.postUpload(this.filiadoId, this.file)
-      .subscribe(
-        (res) => {
-          this.carregarFiliado();
-          this.toastr.success('Imagem alterada com sucesso!', 'Sucesso!');
-        },
-        (error) => {
-          this.toastr.error('Erro ao alterar imagem. Tente novamente!', 'Erro!');
-        }
-      ).add(() => this.spinner.hide());
-  }
-
 }
