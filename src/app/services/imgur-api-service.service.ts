@@ -13,9 +13,7 @@ export class ImgurApiService {
 
   upload(b64Image: any) {
     const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: `Client-ID ${this.clientId}`
-      }),
+      headers: new HttpHeaders().set('Authorization', `Client-ID ${this.clientId}`),
     };
     const formData = new FormData();
     formData.append('image', b64Image);
