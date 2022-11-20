@@ -1,19 +1,16 @@
+import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class ImgurApiService {
   private readonly IMGUR_UPLOAD_URL = 'https://api.imgur.com/3/image/';
-  private readonly clientId = '629dd7eb50f8526';
 
-  constructor(
-    private http: HttpClient
-  ) {
-  }
+  constructor(private http: HttpClient) { }
 
   upload(b64Image: any) {
     const httpOptions = {
-      headers: new HttpHeaders().set('Authorization', `Client-ID ${this.clientId}`),
+      headers: new HttpHeaders().set('authorization', `Client-ID ${environment.CLIENT_ID}`),
     };
     const formData = new FormData();
     formData.append('image', b64Image);

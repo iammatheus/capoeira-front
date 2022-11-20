@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { PaginatedResult } from '@app/models/Pagination';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from '../../environments/environment';
 import { Filiado } from '../models/Filiado';
 
 @Injectable()

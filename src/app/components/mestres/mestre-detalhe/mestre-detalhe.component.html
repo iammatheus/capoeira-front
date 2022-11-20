@@ -14,7 +14,8 @@
                 </div>
                 <div class="col-sm-4 mb-3 p-0">
                   <label>Tipo</label>
-                  <select class="form-select" formControlName="tipo">
+                  <select class="form-select" style="cursor: pointer" formControlName="tipo">
+                    <option value="" disabled>Selecione uma opção...</option>
                     <option value="DN">Diretoria de Núcleos</option>
                     <option value="DE">Diretoria Executiva</option>
                   </select>
@@ -43,9 +44,8 @@
             <div class="form-row">
               <div class="form-group col-md-12">
                 <label>Descrição</label>
-                <textarea  formControlName="descricao" placeholder="Insira o descricao" [(ngModel)]="mestre.descricao" class="form-control" rows="7" [ngClass]="cssValidator(controls.descricao)"></textarea>
-                <div *ngIf="controls.descricao.errors?.maxlength" class="invalid-feedback">Descrição deve conter no
-                  máximo 500 caracteres.</div>
+                <textarea formControlName="descricao" placeholder="Insira o descricao" [(ngModel)]="mestre.descricao" class="form-control" rows="7" [ngClass]="cssValidator(controls.descricao)"></textarea>
+                <div *ngIf="controls.descricao.errors?.required" class="invalid-feedback">Descrição é obrigatório.</div>
               </div>
             </div>
           </div>
@@ -77,16 +77,16 @@
           </div>
           <div class="card-body pt-3">
             <h4>{{mestre.nome}}</h4>
-            <p class="card-text">
-              <b>Descrição:</b> {{mestre.descricao}}
-            </p>
-            <hr>
             <div class="instagram" *ngIf="mestre.instagram">
               <a href="https://instagram.com/{{mestre.instagram}}" target="_blank">
                 <i class="fa-brands fa-instagram"></i>
                 <span> @{{mestre.instagram}}</span>
               </a>
             </div>
+            <hr>
+            <p class="card-text">
+              {{mestre.descricao}}
+            </p>
           </div>
         </div>
       </div>

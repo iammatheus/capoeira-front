@@ -1,6 +1,5 @@
 import { MestreService } from './../../../services/mestre.service';
 import { Mestre } from './../../../models/Mestre';
-import { environment } from './../../../../environments/environment.prod';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Component, OnInit } from '@angular/core';
@@ -87,8 +86,8 @@ export class MestreDetalheComponent implements OnInit {
   public validation(): void {
     this.form = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      tipo: ['', [Validators.minLength(2), Validators.maxLength(2)]],
-      descricao: ['', [Validators.required, Validators.maxLength(500)]],
+      tipo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
+      descricao: ['', [Validators.required]],
       instagram: ['', [Validators.maxLength(15)]],
       imagemUrl: ['']
     });
@@ -118,6 +117,8 @@ export class MestreDetalheComponent implements OnInit {
         },
         () => this.spinner.hide(),
       );
+    } else {
+      this.toastr.error('Preencha os campos obrigatórios.', 'Erro!');
     }
   }
 

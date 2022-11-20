@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from 'src/environments/environment.prod';
 import { PaginatedResult, Pagination } from '@app/models/Pagination';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';

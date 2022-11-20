@@ -22,6 +22,12 @@
   top: var(--default-height);
 }
 
+.card-body{
+  margin-top: 10px;
+  overflow: auto;
+  max-height: 45vh;
+}
+
 .card-evento-view{
   position: sticky;
   top: 10px;
