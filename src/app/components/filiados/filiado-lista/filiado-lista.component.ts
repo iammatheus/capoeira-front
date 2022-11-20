@@ -46,8 +46,10 @@ export class FiliadoListaComponent implements OnInit {
     this.carregarFiliados();
   }
 
-  public mostraImagem(imagemURL: string): string {
-    return '../../../../assets/img/sem-imagem.png';
+  public mostraImagem(imagem: string): string {
+    return (imagem && imagem !== '')
+    ? `${imagem}`
+    : '../../../../assets/img/sem-imagem.png';
   }
 
   public carregarFiliados(): void {

@@ -19,7 +19,7 @@ export class FiliadoDetalheComponent implements OnInit {
   filiado = {} as Filiado;
   estadoSalvar = 'post';
   filiadoId: string;
-  imagemImgur = 'assets/img/upload.png';
+  imagem = 'assets/img/upload.png';
 
   get modoEditar(): boolean {
     return this.estadoSalvar === 'put';
@@ -52,13 +52,16 @@ export class FiliadoDetalheComponent implements OnInit {
     this.localeService.use('pt-br')
   }
 
+  ngOnInit(): void {
+    this.validation();
+    this.carregarFiliado();
+  }
+
   onChange(file: any) {
-    console.log('file', file)
     this.imgurService.upload(file.target.files[0])
       .subscribe(res => {
         this.form.value.imagem = res['data'].link;
-        this.imagemImgur = res['data'].link;
-        console.log({'res: ': res, 'ImagemImgur': this.imagemImgur, 'ImagemUrlForm': this.form.value.imagem, 'res.data': res['data']})
+        this.imagem = res['data'].link;
       });
   }
 
@@ -73,6 +76,7 @@ export class FiliadoDetalheComponent implements OnInit {
         .subscribe(
           (filiado: Filiado) => {
             this.filiado = { ...filiado };
+            this.imagem = this.filiado.imagem
             this.form.patchValue(this.filiado);
           },
           (error: any) => {
@@ -81,11 +85,6 @@ export class FiliadoDetalheComponent implements OnInit {
           () => this.spinner.hide(),
         );
     }
-  }
-
-  ngOnInit(): void {
-    this.validation();
-    this.carregarFiliado();
   }
 
   public validation(): void {
