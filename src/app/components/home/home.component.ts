@@ -38,16 +38,10 @@ export class HomeComponent implements OnInit {
     this.carregaFiliados();
   }
 
-  onChange(file: any) {
-    this.imgurService.upload(file.target.files[0])
-      .subscribe(res => {
-        this.imagemImgur = res['data'].link;
-        console.log({'res: ': res, 'ImagemUrl': this.imagemImgur, 'res.data': res['data']})
-      });
-  }
-
-  public mostraImagem(imagemURL: string): string {
-    return 'assets/img/sem-imagem.png';
+  public mostraImagem(imagem: string): string {
+    return (imagem && imagem !== '')
+    ? `${imagem}`
+    : 'assets/img/sem-imagem.png';
   }
 
   public carregaEventos(): void {

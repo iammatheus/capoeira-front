@@ -1,3 +1,4 @@
+import { ImgurApiService } from './../../../services/imgur-api-service.service';
 import { MestreService } from './../../../services/mestre.service';
 import { Mestre } from './../../../models/Mestre';
 import { ToastrService } from 'ngx-toastr';
@@ -6,7 +7,6 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-mestre-detalhe',
@@ -14,13 +14,11 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
   styleUrls: ['./mestre-detalhe.component.scss']
 })
 export class MestreDetalheComponent implements OnInit {
-  modalRef: BsModalRef;
   form!: FormGroup;
   mestre = {} as Mestre;
   estadoSalvar = 'post';
   mestreId: string;
-  imagemURL = 'assets/img/upload.png';
-  file: File;
+  imagem = 'assets/img/upload.png';
 
   get modoEditar(): boolean {
     return this.estadoSalvar === 'put';
@@ -48,9 +46,26 @@ export class MestreDetalheComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
     private router: Router,
-    private modalService: BsModalService,
+    private imgurService: ImgurApiService
   ) {
     this.localeService.use('pt-br')
+  }
+
+  onChange(file: any) {
+    this.spinner.show()
+    this.imgurService.upload(file.target.files[0]).subscribe(
+      (res) => {
+        this.form.value.imagem = res['data'].link;
+        this.imagem = res['data'].link;
+        this.toastr.success('Imagem carregada.', 'Sucesso!');
+      },
+      (error: any) => {
+        this.toastr.error('Erro ao carregar imagem.', 'Erro!');
+        console.error(error);
+        this.spinner.hide();
+      },
+      () => this.spinner.hide(),
+    )
   }
 
   public carregarMestre(): void {
@@ -64,11 +79,8 @@ export class MestreDetalheComponent implements OnInit {
         .subscribe(
           (mestre: Mestre) => {
             this.mestre = { ...mestre };
+            this.imagem = this.mestre.imagem ? this.mestre.imagem : this.imagem
             this.form.patchValue(this.mestre);
-
-            if (this.mestre.imagem !== '') {
-              this.imagemURL = '../../../../assets/img/sem-imagem.png';
-            }
           },
           (error: any) => {
             this.toastr.error('Erro ao carregar mestre.', 'Erro!')
@@ -89,7 +101,7 @@ export class MestreDetalheComponent implements OnInit {
       tipo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
       descricao: ['', [Validators.required]],
       instagram: ['', [Validators.maxLength(15)]],
-      imagemUrl: ['']
+      imagem: ['']
     });
   }
 
@@ -107,9 +119,11 @@ export class MestreDetalheComponent implements OnInit {
       this.mestre = (this.estadoSalvar === 'post') ? { ...this.form.value } : { _id: this.mestre._id, ...this.form.value };
 
       this.mestreService[this.estadoSalvar](this.mestre).subscribe(
-        (res: any) => {
+        ({_id}) => {
           this.toastr.success('Mestre salvo com sucesso!', 'Sucesso!');
-          this.router.navigate([`/mestres/detalhe/${res.data._id}`]);
+          this.estadoSalvar === 'post'
+            ? this.router.navigate([`/mestres/detalhe/${_id}`])
+            : this.router.navigate([`/mestres/detalhe/${this.mestre._id}`])
         },
         (error: any) => {
           this.spinner.hide();
@@ -120,30 +134,5 @@ export class MestreDetalheComponent implements OnInit {
     } else {
       this.toastr.error('Preencha os campos obrigatórios.', 'Erro!');
     }
-  }
-
-  onFileChange(ev: any): void {
-    const reader = new FileReader();
-
-    reader.onload = (event: any) => this.imagemURL = event.target.result;
-
-    this.file = ev.target.files;
-    reader.readAsDataURL(this.file[0]);
-
-    this.uploadImagem();
-  }
-
-  uploadImagem(): void {
-    this.spinner.show();
-    this.mestreService.postUpload(this.mestreId, this.file)
-      .subscribe(
-        (res) => {
-          this.carregarMestre();
-          this.toastr.success('Imagem alterada com sucesso!', 'Sucesso!');
-        },
-        (error) => {
-          this.toastr.error('Erro ao alterar imagem. Tente novamente!', 'Erro!');
-        }
-      ).add(() => this.spinner.hide());
   }
 }
