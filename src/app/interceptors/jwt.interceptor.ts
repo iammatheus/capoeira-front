@@ -17,10 +17,11 @@ export class JwtInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let currentUser: User;
+    const imgurUrl = 'https://api.imgur.com/3/image/';
 
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
       currentUser = user;
-      if(currentUser){
+      if(currentUser && request.url !== imgurUrl){
         request = request.clone({
           setHeaders: {
             authorization: `${currentUser.token}`

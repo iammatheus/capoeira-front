@@ -1,4 +1,3 @@
-import { environment } from './../../../../environments/environment.prod';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Evento } from '@app/models/Evento';
@@ -49,7 +48,6 @@ export class EventoDetalheComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
     private router: Router,
-    private modalService: BsModalService,
   ) {
     this.localeService.use('pt-br')
   }
@@ -84,7 +82,7 @@ export class EventoDetalheComponent implements OnInit {
 
   public validation(): void {
     this.form = this.fb.group({
-      titulo: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
+      titulo: ['', [Validators.required]],
       descricao: [''],
       local: ['', [Validators.required]],
       dataEvento: ['', [Validators.required]],
@@ -118,6 +116,8 @@ export class EventoDetalheComponent implements OnInit {
         },
         () => this.spinner.hide(),
       );
+    } else {
+      this.toastr.error('Preencha os campos obrigatórios.', 'Erro!');
     }
   }
 

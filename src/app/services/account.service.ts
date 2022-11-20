@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '@app/models/Identity/User';
 import { Observable, ReplaySubject } from 'rxjs';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from '../../environments/environment';
 import { map, take } from 'rxjs/operators';
 import { UserUpdate } from '@app/models/Identity/UserUpdate';
 import jwt_decode from 'jwt-decode';

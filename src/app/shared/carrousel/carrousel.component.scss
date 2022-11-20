@@ -39,7 +39,19 @@
     object-position: center;
   }
 }
+
+.info::-webkit-scrollbar {
+  width: 8px;
+  background: #fdf4b6;
+  border-radius: 20px;
+}
+
+.info::-webkit-scrollbar-thumb {
+  background-color: #edcd03;
+  border-radius: 20px;
+}
 .info{
+  overflow: auto;
   padding: 0 20px;
   width: 40%;
   height: 100%;
