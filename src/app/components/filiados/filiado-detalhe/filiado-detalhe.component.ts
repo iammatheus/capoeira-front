@@ -56,9 +56,9 @@ export class FiliadoDetalheComponent implements OnInit {
     console.log('file', file)
     this.imgurService.upload(file.target.files[0])
       .subscribe(res => {
-        this.form.value.imagemUrl = res['data'].link;
+        this.form.value.imagem = res['data'].link;
         this.imagemImgur = res['data'].link;
-        console.log({'res: ': res, 'ImagemImgur': this.imagemImgur, 'ImagemUrlForm': this.form.value.imagemUrl, 'res.data': res['data']})
+        console.log({'res: ': res, 'ImagemImgur': this.imagemImgur, 'ImagemUrlForm': this.form.value.imagem, 'res.data': res['data']})
       });
   }
 
@@ -91,7 +91,7 @@ export class FiliadoDetalheComponent implements OnInit {
   public validation(): void {
     this.form = this.fb.group({
       nome: [''],
-      imagemUrl: ['']
+      imagem: ['']
     });
   }
 

@@ -4,7 +4,7 @@ export interface Evento {
   dataEvento?: Date;
   titulo: string;
   descricao: string;
-  imagemUrl: string;
+  imagem: string;
   telefone: string;
   email: string;
 }

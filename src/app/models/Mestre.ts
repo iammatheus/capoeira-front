@@ -4,5 +4,5 @@ export interface Mestre {
   tipo: string;
   descricao: string;
   instagram: string;
-  imagemUrl: string;
+  imagem: string;
 }
