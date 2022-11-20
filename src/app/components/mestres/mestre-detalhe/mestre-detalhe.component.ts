@@ -107,9 +107,9 @@ export class MestreDetalheComponent implements OnInit {
       this.mestre = (this.estadoSalvar === 'post') ? { ...this.form.value } : { _id: this.mestre._id, ...this.form.value };
 
       this.mestreService[this.estadoSalvar](this.mestre).subscribe(
-        ({_id}: Mestre) => {
+        (res: any) => {
           this.toastr.success('Mestre salvo com sucesso!', 'Sucesso!');
-          this.router.navigate([`/mestres/detalhe/${_id}`]);
+          this.router.navigate([`/mestres/detalhe/${res.data._id}`]);
         },
         (error: any) => {
           this.spinner.hide();

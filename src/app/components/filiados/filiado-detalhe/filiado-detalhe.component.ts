@@ -1,7 +1,7 @@
 import { Filiado } from './../../../models/Filiado';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FiliadoService } from '../../../services/filiado.service';
@@ -19,8 +19,7 @@ export class FiliadoDetalheComponent implements OnInit {
   filiado = {} as Filiado;
   estadoSalvar = 'post';
   filiadoId: string;
-  imagemURL = 'assets/img/upload.png';
-  public imagemImgur = '';
+  imagemImgur = 'assets/img/upload.png';
 
   get modoEditar(): boolean {
     return this.estadoSalvar === 'put';
@@ -57,8 +56,9 @@ export class FiliadoDetalheComponent implements OnInit {
     console.log('file', file)
     this.imgurService.upload(file.target.files[0])
       .subscribe(res => {
+        this.form.value.imagemUrl = res['data'].link;
         this.imagemImgur = res['data'].link;
-        console.log({'res: ': res, 'ImagemUrl': this.imagemImgur, 'res.data': res['data']})
+        console.log({'res: ': res, 'ImagemImgur': this.imagemImgur, 'ImagemUrlForm': this.form.value.imagemUrl, 'res.data': res['data']})
       });
   }
 
@@ -107,11 +107,10 @@ export class FiliadoDetalheComponent implements OnInit {
     if (this.form.valid) {
       this.spinner.show();
       this.filiado = (this.estadoSalvar === 'post') ? { ...this.form.value } : { _id: this.filiado._id, ...this.form.value };
-
       this.filiadoService[this.estadoSalvar](this.filiado).subscribe(
-        ({ _id }: Filiado) => {
+        (res: any) => {
           this.toastr.success('Filiado salvo com sucesso!', 'Sucesso!');
-          this.router.navigate([`/filiados/detalhe/${_id}`])
+          this.router.navigate([`/filiados/detalhe/${res.data._id}`])
         },
         (error: any) => {
           this.spinner.hide();

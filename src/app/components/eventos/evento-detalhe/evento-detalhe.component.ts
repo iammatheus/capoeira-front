@@ -105,9 +105,9 @@ export class EventoDetalheComponent implements OnInit {
       this.spinner.show();
       this.evento = (this.estadoSalvar === 'post') ? { ...this.form.value } : { _id: this.evento._id, ...this.form.value };
       this.eventoService[this.estadoSalvar](this.evento).subscribe(
-        ({ _id }: Evento) => {
+        (res: any) => {
           this.toastr.success('Evento salvo com sucesso!', 'Sucesso!');
-          this.router.navigate([`/eventos/detalhe/${_id}`]);
+          this.router.navigate([`/eventos/detalhe/${res.data._id}`]);
         },
         (error: any) => {
           this.spinner.hide();
