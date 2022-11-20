@@ -1,3 +1,4 @@
+import { ImgurApiService } from './../../../services/imgur-api-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Evento } from '@app/models/Evento';
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-evento-detalhe',
@@ -19,8 +20,8 @@ export class EventoDetalheComponent implements OnInit {
   evento = {} as Evento;
   estadoSalvar = 'post';
   eventoId: string;
-  imagemURL = 'assets/img/upload.png';
-  file: File;
+  imagem = 'assets/img/upload.png';
+
 
   get modoEditar(): boolean {
     return this.estadoSalvar === 'put';
@@ -48,8 +49,31 @@ export class EventoDetalheComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
     private router: Router,
+    private imgurService: ImgurApiService
   ) {
     this.localeService.use('pt-br')
+  }
+
+  ngOnInit(): void {
+    this.validation();
+    this.carregarEvento();
+  }
+
+  onChange(file: any) {
+    this.spinner.show()
+    this.imgurService.upload(file.target.files[0]).subscribe(
+      (res) => {
+        this.form.value.imagem = res['data'].link;
+        this.imagem = res['data'].link;
+        this.toastr.success('Imagem carregada.', 'Sucesso!');
+      },
+      (error: any) => {
+        this.toastr.error('Erro ao carregar imagem.', 'Erro!');
+        console.error(error);
+        this.spinner.hide();
+      },
+      () => this.spinner.hide(),
+    )
   }
 
   public carregarEvento(): void {
@@ -61,10 +85,8 @@ export class EventoDetalheComponent implements OnInit {
         .subscribe(
           (evento: Evento) => {
             this.evento = { ...evento };
+            this.imagem = this.evento.imagem ? this.evento.imagem : this.imagem
             this.form.patchValue(this.evento);
-            if(this.evento.imagem !== ''){
-              this.imagemURL = '../../../../assets/img/sem-imagem.png';
-            }
           },
           (error: any) => {
             this.toastr.error('Erro ao carregar evento.', 'Erro!')
@@ -75,11 +97,6 @@ export class EventoDetalheComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-    this.validation();
-    this.carregarEvento();
-  }
-
   public validation(): void {
     this.form = this.fb.group({
       titulo: ['', [Validators.required]],
@@ -88,7 +105,7 @@ export class EventoDetalheComponent implements OnInit {
       dataEvento: ['', [Validators.required]],
       telefone: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(11)]],
       email: ['', [Validators.required, Validators.email]],
-      imagemUrl: ['']
+      imagem: ['']
     });
   }
 
@@ -105,9 +122,11 @@ export class EventoDetalheComponent implements OnInit {
       this.spinner.show();
       this.evento = (this.estadoSalvar === 'post') ? { ...this.form.value } : { _id: this.evento._id, ...this.form.value };
       this.eventoService[this.estadoSalvar](this.evento).subscribe(
-        (res: any) => {
+        ({_id}) => {
           this.toastr.success('Evento salvo com sucesso!', 'Sucesso!');
-          this.router.navigate([`/eventos/detalhe/${res.data._id}`]);
+          this.estadoSalvar === 'post'
+            ? this.router.navigate([`/eventos/detalhe/${_id}`])
+            : this.router.navigate([`/eventos/detalhe/${this.evento._id}`])
         },
         (error: any) => {
           this.spinner.hide();
@@ -121,40 +140,5 @@ export class EventoDetalheComponent implements OnInit {
     }
   }
 
-  imageFile(str: string): boolean {
-    const regex = /.*\.(jpe?g|png)$/g;
-
-    if(regex.test(str)) return true;
-
-    return false;
-  }
-
-  onFileChange(ev: any): void{
-    const reader = new FileReader();
-
-    this.file = ev.target.files;
-    reader.readAsDataURL(this.file[0]);
-
-    if(this.imageFile(this.file[0].name)){
-      this.uploadImagem();
-      reader.onload = (event: any) => this.imagemURL = event.target.result;
-    }else {
-      this.toastr.warning('Tente: png, jpg ou jpeg.', 'Formato inválido!');
-    }
-  }
-
-  uploadImagem(): void {
-    this.spinner.show();
-    this.eventoService.postUpload(this.eventoId, this.file)
-      .subscribe(
-        (res) => {
-          this. carregarEvento();
-          this.toastr.success('Imagem alterada com sucesso!', 'Sucesso!');
-        },
-        (error) => {
-          this.toastr.error('Erro ao alterar imagem. Tente novamente!', 'Erro!');
-        }
-      ).add(() => this.spinner.hide());
-  }
 }
 

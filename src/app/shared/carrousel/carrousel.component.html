@@ -3,7 +3,7 @@
   <swiper [pagination]="{ dynamicBullets: true }" [navigation]="true" class="mySwiper2 mySwiperDimension" *ngIf="itens.length > 0">
     <ng-template swiperSlide class="swiper-slide-2 {{addClassFlexRowReverse()}}" *ngFor="let item of itens">
       <div class="img-mestre">
-        <img [src]="mostraImagem(item.imagemUrl)" alt="">
+        <img [src]="mostraImagem(item.imagem)" alt="">
       </div>
       <div class="info">
         <h3>{{item.nome}}</h3>

@@ -1,7 +1,6 @@
 import { Filiado } from './../../../models/Filiado';
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FiliadoService } from '../../../services/filiado.service';
@@ -14,12 +13,11 @@ import { ImgurApiService } from '../../../services/imgur-api-service.service';
   styleUrls: ['./filiado-detalhe.component.scss']
 })
 export class FiliadoDetalheComponent implements OnInit {
-  modalRef: BsModalRef;
   form!: FormGroup;
   filiado = {} as Filiado;
   estadoSalvar = 'post';
   filiadoId: string;
-  imagem = 'assets/img/upload.png';
+  imagem = '../../../../assets/img/upload.png';
 
   get modoEditar(): boolean {
     return this.estadoSalvar === 'put';
@@ -85,7 +83,7 @@ export class FiliadoDetalheComponent implements OnInit {
         .subscribe(
           (filiado: Filiado) => {
             this.filiado = { ...filiado };
-            this.imagem = this.filiado.imagem
+            this.imagem = this.filiado.imagem ? this.filiado.imagem : this.imagem
             this.form.patchValue(this.filiado);
           },
           (error: any) => {
@@ -98,7 +96,7 @@ export class FiliadoDetalheComponent implements OnInit {
 
   public validation(): void {
     this.form = this.fb.group({
-      nome: [''],
+      nome: ['', [Validators.required]],
       imagem: ['']
     });
   }
@@ -116,9 +114,11 @@ export class FiliadoDetalheComponent implements OnInit {
       this.spinner.show();
       this.filiado = (this.estadoSalvar === 'post') ? { ...this.form.value } : { _id: this.filiado._id, ...this.form.value };
       this.filiadoService[this.estadoSalvar](this.filiado).subscribe(
-        (res: any) => {
+        ({_id}) => {
           this.toastr.success('Filiado salvo com sucesso!', 'Sucesso!');
-          this.router.navigate([`/filiados/detalhe/${res.data._id}`])
+          this.estadoSalvar === 'post'
+            ? this.router.navigate([`/filiados/detalhe/${_id}`])
+            : this.router.navigate([`/filiados/detalhe/${this.filiado._id}`])
         },
         (error: any) => {
           this.spinner.hide();
