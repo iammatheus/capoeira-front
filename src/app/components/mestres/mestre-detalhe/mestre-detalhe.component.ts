@@ -66,7 +66,7 @@ export class MestreDetalheComponent implements OnInit {
             this.mestre = { ...mestre };
             this.form.patchValue(this.mestre);
 
-            if (this.mestre.imagemUrl !== '') {
+            if (this.mestre.imagem !== '') {
               this.imagemURL = '../../../../assets/img/sem-imagem.png';
             }
           },

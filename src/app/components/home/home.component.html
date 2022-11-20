@@ -16,7 +16,7 @@
     [thumbs]="{ swiper: thumbsSwiper }"
     class="mySwiper2">
     <ng-template swiperSlide *ngFor="let item of eventos">
-        <img src="{{mostraImagem(item.imagemUrl)}}" />
+        <img src="{{mostraImagem(item.imagem)}}" />
     </ng-template>
   </swiper>
   <swiper
@@ -28,7 +28,7 @@
     class="mySwiper">
     <ng-template swiperSlide *ngFor="let item of eventos">
       <div>
-        <img src="{{mostraImagem(item.imagemUrl)}}" />
+        <img src="{{mostraImagem(item.imagem)}}" />
       </div>
     </ng-template>
   </swiper>
@@ -81,7 +81,7 @@
   <app-titulo-container [titulo]="'Nossos parceiros'"></app-titulo-container>
   <div class="d-flex justify-content-start filial flex-wrap">
     <div *ngFor="let filiado of filiados">
-      <img src="{{mostraImagem(filiado.imagemUrl)}}" />
+      <img src="{{mostraImagem(filiado.imagem)}}" />
     </div>
   </div>
 </div>
