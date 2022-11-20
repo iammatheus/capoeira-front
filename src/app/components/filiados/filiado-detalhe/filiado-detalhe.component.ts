@@ -58,11 +58,20 @@ export class FiliadoDetalheComponent implements OnInit {
   }
 
   onChange(file: any) {
-    this.imgurService.upload(file.target.files[0])
-      .subscribe(res => {
+    this.spinner.show()
+    this.imgurService.upload(file.target.files[0]).subscribe(
+      (res) => {
         this.form.value.imagem = res['data'].link;
         this.imagem = res['data'].link;
-      });
+        this.toastr.success('Imagem carregada.', 'Sucesso!');
+      },
+      (error: any) => {
+        this.toastr.error('Erro ao carregar imagem.', 'Erro!');
+        console.error(error);
+        this.spinner.hide();
+      },
+      () => this.spinner.hide(),
+    )
   }
 
   public carregarFiliado(): void {
