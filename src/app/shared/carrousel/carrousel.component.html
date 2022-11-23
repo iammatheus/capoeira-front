@@ -7,13 +7,13 @@
       </div>
       <div class="info">
         <h3>{{item.nome}}</h3>
-        <p>{{item.descricao}}</p>
         <div class="instagram" *ngIf="item.instagram">
           <a href="https://instagram.com/{{item.instagram}}" target="_blank">
             <i class="fa-brands fa-instagram"></i>
             <span> @{{item.instagram}}</span>
           </a>
         </div>
+        <p>{{item.descricao}}</p>
       </div>
     </ng-template>
   </swiper>

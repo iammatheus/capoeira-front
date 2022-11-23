@@ -4,10 +4,10 @@
     <h1 class="text-center">Bem-vindo ao FECARJ!</h1>
   </div>
 
-  <iframe  src="https://www.youtube.com/embed/qFosHqxAtzE?autoplay=1&mute=1&controls=0&loop=1&playlist=qFosHqxAtzE&rel=0&start=19" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <iframe  src="https://www.youtube.com/embed/BS2EAz9J6XY?autoplay=1&mute=1&controls=0&loop=1&playlist=BS2EAz9J6XY&rel=0&start=19" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-<div class="container carousel mt-4" *ngIf="eventos">
+<div class="container carousel mt-4" *ngIf="eventos" id="eventos">
   <app-titulo-container [titulo]="'Eventos & Atividades'"></app-titulo-container>
   <swiper
     style="--swiper-navigation-color: #edcd03;--swiper-pagination-color: #edcd03"
@@ -34,7 +34,7 @@
   </swiper>
 </div>
 
-<div class="img-back mt-5 mb-5">
+<div class="img-back mt-5 mb-5" id="sobre">
   <div class="divisao w-50">
     <div class="quem-somos">
       <div class="w-50 div-none"></div>
@@ -68,27 +68,33 @@
   </div>
 </div>
 
-<app-carrousel
+<div id="diretoria-executiva">
+  <app-carrousel
   [itens]="mestresDE"
   [titulo]="'Diretoria Executiva'"
 ></app-carrousel>
+</div>
 
-<div class="container mt-5 mb-5">
+
+<div class="container mt-5 mb-5" id="filiados">
   <app-titulo-container [titulo]="'Nossos parceiros'"></app-titulo-container>
   <div class="d-flex justify-content-start filial flex-wrap">
     <div *ngFor="let filiado of filiados">
-      <img src="{{mostraImagem(filiado.imagem)}}" />
+      <img src="{{mostraImagem(filiado.imagem)}}" tooltip={{filiado.nome}}/>
     </div>
   </div>
 </div>
 
-<app-carrousel
+<div id="diretoria-nucleos">
+  <app-carrousel
   [itens]="mestresDN"
   [titulo]="'Diretoria de Núcleos'"
   [id]="2"
 ></app-carrousel>
+</div>
 
-<div class="container mt-5">
+
+<div class="container mt-5" id="contatos">
   <app-titulo-container [titulo]="'Contatos'"></app-titulo-container>
   <h5 class="text-center">Para qualquer informação, dúvida ou comentário, <br>por favor, ligue ou nos mande uma
     mensagem!</h5>

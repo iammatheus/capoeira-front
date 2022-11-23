@@ -78,7 +78,6 @@
                 Limpar campos
               </button>
               <button class="btn btn-success" [disabled]="!form.valid" (click)="salvarEvento()">
-                <!-- <span class="spinner-border spinner-border-sm mr-1"></span> -->
                 Salvar
               </button>
             </div>
@@ -128,11 +127,3 @@
   </div>
 </div>
 <br>
-
-<!-- <ng-template #template>
-  <div class="modal-body text-center">
-    <p>Deseja realmente excluir o lote {{this.loteAtual.nome}}?</p>
-    <button type="button" class="btn btn-default" (click)="confirmDeleteLote()">Sim</button>
-    <button type="button" class="btn btn-primary" (click)="declineDeleteLote()">Não</button>
-  </div>
-</ng-template> -->
